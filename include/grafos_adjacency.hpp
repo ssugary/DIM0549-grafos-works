@@ -1,18 +1,19 @@
-#ifndef GRAFOS_HPP
-#define GRAFOS_HPP
+#ifndef GRAFOS_LISTA_ADJACENTE_HPP
+#define GRAFOS_LISTA_ADJACENTE_HPP
 
 #include <array>
 #include <iostream>
 #include <vector>
 
 using value = int;
-using  matriz = std::vector<std::vector<value>>;
-class Graph {
+using matriz = std::vector<std::vector<value>>;
+
+class GraphAdj {
   public:
   value m_vertices{};
   matriz  m_adjacency;
 
-   Graph( value vertices ) : m_vertices( vertices ) {
+   GraphAdj( value vertices ) : m_vertices( vertices ) {
     m_adjacency.resize( vertices, std::vector<value>( vertices, 0 ) );
 }
   void add(value origin, value destiny);

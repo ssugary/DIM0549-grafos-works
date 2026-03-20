@@ -1,7 +1,7 @@
 #include "../include/grafos_adjacency.hpp"
 
 
-    void Graph::add( value origin, value destiny ) {
+    void GraphAdj::add( value origin, value destiny ) {
     if(origin < 1 || origin > m_vertices || destiny < 1 || destiny > m_vertices) {
       std::cerr << "Error: Vertex index out of bounds." << std::endl;
       return;
@@ -10,7 +10,7 @@
     m_adjacency[destiny-1][origin-1] = 1; 
     // Para grafos não direcionados, adicionamos a aresta em ambas as direções
   }
-    void Graph:: remove( value origin, value destiny ) {
+    void GraphAdj::remove( value origin, value destiny ) {
     if(origin < 1 || origin > m_vertices || destiny < 1 || destiny > m_vertices) {
       std::cerr << "Error: Vertex index out of bounds." << std::endl;
       return;
@@ -20,7 +20,7 @@
     // Para grafos não direcionados, removemos a aresta em ambas as direções
   }
 
-    void Graph:: print() const {
+    void GraphAdj::print() const {
     std::cout << " | ";
     for ( value i = 0; i < m_vertices; ++i ) {
       std::cout << i + 1 << " ";
