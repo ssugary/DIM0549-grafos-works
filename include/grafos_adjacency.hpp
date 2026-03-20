@@ -3,12 +3,14 @@
 
 #include <array>
 #include <iostream>
+#include "graph.hpp"
 #include <vector>
 
 using value = int;
 using matriz = std::vector<std::vector<value>>;
+using namespace grp;
 
-class GraphAdj {
+class GraphAdj : Graph {
   public:
   value m_vertices{};
   matriz  m_adjacency;

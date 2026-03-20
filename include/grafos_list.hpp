@@ -1,11 +1,13 @@
 #ifndef GRAPH_LIST_HPP
 #define GRAPH_LIST_HPP
 
+#include "graph.hpp"
 #include <list>
 
 using value = int;
+using namespace grp;
 
-class GraphList {
+class GraphList : Graph {
 private:
   std::list<value> *adjacencyList;
   value vertices;
