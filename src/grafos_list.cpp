@@ -76,19 +76,102 @@ void GraphList::print() const {
       std::cout << "\n";
     }
 
-    void GraphList::dfsRecPredAux(int u, std::vector<bool> &visited, std::vector<int> &pred){
+    void GraphList::dfsRecPredAux(int vertex, std::vector<bool> &visited, std::vector<int> &pred){
 
-      visited[u - 1] = 1;
+      visited[vertex - 1] = 1;
 
-      std::cout << "Visitando: " << u << "\n";
+      std::cout << "Visitando: " << vertex << "\n";
 
-      for(int v : adjacencyList[u - 1]){
+      for(int v : adjacencyList[vertex - 1]){
         if(!visited[v - 1]){
-          pred[v - 1] = u;
-          std::cout << "  Predecessor de " << v << " agora é " << u << "\n";
+          pred[v - 1] = vertex;
+          std::cout << "  Predecessor de " << v << " agora é " << vertex << "\n";
           dfsRecPredAux(v, visited, pred);
         }
       }
 
     }
 
+void GraphList::bfsOrdemRetirada(int vertex) {
+    if(vertex < 1 || vertex > vertices) return;
+
+    std::vector<bool> visited(vertices, false);
+    std::vector<int> ordem_retirada(vertices, 0); 
+    std::queue<int> fila;
+
+    visited[vertex - 1] = true;
+    fila.push(vertex);
+
+    int contador_ordem = 1;
+
+    std::cout << "Iniciando BFS a partir do vértice " << vertex << "\n";
+
+    while(!fila.empty()) {
+        int u = fila.front();
+        fila.pop();
+        ordem_retirada[u - 1] = contador_ordem++;
+        
+        std::cout << "Retirando da fila o vértice: " << u << "\n";
+
+        for(int v : adjacencyList[u - 1]) {
+            if(!visited[v - 1]) {
+                visited[v - 1] = true;
+                fila.push(v);
+            }
+        }
+    }
+
+    std::cout << "\nOrdem final de retirada (Largura de V)\n";
+    for(int i = 0; i < vertices; i++) {
+        std::cout << "Vértice " << i + 1 << ": retirado na posição " << ordem_retirada[i] << "\n";
+    }
+}
+
+void GraphList::bfsClassificaArestas(int vertex) {
+    if (vertex < 1 || vertex > vertices) {
+        std::cerr << "Error: Vertex index out of bound.\n";
+        return;
+    }
+
+    std::vector<bool> visited(vertices, 0);
+    std::vector<int> nivel(vertices, -1);
+    std::vector<int> pai(vertices, -1);
+    std::queue<int> fila;
+
+    visited[vertex - 1] = true;
+    nivel[vertex - 1] = 0;
+    fila.push(vertex);
+
+    std::cout << "Classificação de Arestas a partir de " << vertex << " \n";
+
+    while(!fila.empty()) {
+        int u = fila.front();
+        fila.pop();
+
+        for(int v : adjacencyList[u - 1]) {
+            if(!visited[v - 1]) {
+                visited[v - 1] = true;
+                pai[v - 1] = u;
+                nivel[v - 1] = nivel[u - 1] + 1;
+                fila.push(v);
+                
+                std::cout << "Aresta (" << u << ", " << v << "): PAI\n";
+            } 
+            else if (v != pai[u - 1]) {
+                if (nivel[u - 1] >= nivel[v - 1]) {
+                    
+                    if (nivel[u - 1] == nivel[v - 1]) {
+                        if (pai[u - 1] == pai[v - 1]) {
+                            std::cout << "Aresta (" << u << ", " << v << "): IRMAO\n";
+                        } else {
+                            std::cout << "Aresta (" << u << ", " << v << "): PRIMO\n";
+                        }
+                    } 
+                    else if (nivel[v - 1] == nivel[u - 1] - 1) {
+                        std::cout << "Aresta (" << u << ", " << v << "): TIO\n";
+                    }
+                }
+            }
+        }
+    }
+}
