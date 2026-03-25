@@ -22,6 +22,8 @@ class Graph {
   void print() const;
 
   void dfs(Graph &g, value vertex);
+
+  void bfs(const Graph &g, value vertex);
 };
 
 #endif // GRAFOS_HPP

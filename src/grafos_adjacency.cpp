@@ -84,4 +84,45 @@
       }
     }
     std::cout << "\n";
+    }
+
+    void Graph:: bfs(const Graph &g, value vertex) {
+    if (g.m_vertices <= 0) {
+      std::cerr << "Error: Empty graph." << std::endl;
+      return;
+    }
+
+    if (vertex < 1 || vertex > g.m_vertices) {
+      std::cerr << "Error: Vertex index out of bounds." << std::endl;
+      return;
+    }
+
+    std::vector<int> visited(g.m_vertices, 0);
+    std::vector<value> queue;
+
+    visited[vertex - 1] = 1;
+    queue.push_back(vertex);
+    std::cout << "Começando BFS com vértice: " << vertex << "\n";
+    while (!queue.empty()) {
+      value current = queue.front();
+       std::cout <<" fila atual= {|";
+       for (auto &&idx: queue)
+       {
+        std::cout <<idx << "|";
+       }
+        std::cout << "}\n";
+       
+      std::cout <<" Removendo o " << current << " do início da fila \n";
+      queue.erase(queue.begin());
+      std::cout <<" valor no início da fila: " << current << "\n";
+
+      for (value i = 0; i < g.m_vertices; ++i) {
+        if (g.m_adjacency[current - 1][i] == 1 && visited[i] == 0) {
+          std::cout <<" Visitando e colocando o " << i + 1 << " na fila \n";
+          visited[i] = 1;
+          queue.push_back(i + 1); 
+        }
+      }
+    }
+    std::cout << "\n";
   }
