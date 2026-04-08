@@ -92,7 +92,14 @@ public:
      * O método verifica se o grafo está usando lista ou matriz de adjacências e imprime a estrutura correspondente de forma legível.
      */
     void print() const;
-
+    /**
+     * @brief Calcula o grau de um vértice específico no grafo. 
+     * O método percorre a estrutura de adjacências (seja lista ou matriz)
+     *  para contar o número de arestas conectadas ao vértice fornecido.
+     * 
+     * @param vertex  representa o vértice para o qual o grau será calculado.
+     * @return int  representa o grau do vértice fornecido, ou -1 se o vértice não existir no grafo.
+     */
     int degree(Type vertex);
 };
 
