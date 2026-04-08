@@ -11,8 +11,10 @@ int main(int argc, char const *argv[])
      g.add(4, 5);
      g.add(5, 6);
      g.add(6, 4);
-      std::cout<< g.degree(4) << std::endl;
-     g.print();
+     g.print(); 
+     std::cout<<"Degree of vertex 4: " <<g.degree(4) << std::endl;
+     g.is_adjacent(1, 4) ? std::cout << "Vertices 1 and 4 are adjacent.\n" : std::cout << "Vertices 1 and 4 are not adjacent.\n";
+     g.is_adjacent(1, 2) ? std::cout << "Vertices 1 and 2 are adjacent.\n" : std::cout << "Vertices 1 and 2 are not adjacent.\n";
      std::cout << "-------------------\n";
      g.to_list();
      g.print();
