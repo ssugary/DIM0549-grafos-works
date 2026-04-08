@@ -11,6 +11,7 @@ int main(int argc, char const *argv[])
      g.add(4, 5);
      g.add(5, 6);
      g.add(6, 4);
+      std::cout<< g.degree(4) << std::endl;
      g.print();
      std::cout << "-------------------\n";
      g.to_list();
