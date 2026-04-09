@@ -229,3 +229,49 @@ bool Graph<T>::is_conexo() {
 }
     return true; //> Se todos os vértices foram visitados, o grafo é conexo
 }
+
+template <typename T>
+int Graph<T>::get_newest_vertex(int current) {
+    for (int i = 0; i < m_vertices; ++i) {
+        if (m_matrix[current][i] != 0) {
+            return i; //> Retorna o índice do primeiro vértice adjacente encontrado, garantindo a consistência na atribuição de cores durante a verificação de bipartição
+        }
+    }
+    return -1; //> Retorna -1 se não houver vértices adjacentes, o que pode indicar um vértice isolado
+}
+
+template <typename T>
+bool Graph<T>::is_bipartite() {
+    enum class Color { RED, BLUE, NONE };
+
+    if (use_list) { to_matrix(); }
+
+    auto g = m_matrix;
+    std::vector<Color> colors(m_vertices, Color::NONE);
+    std::stack<int> s;
+
+    for (int start = 0; start < m_vertices; ++start) {
+        if (colors[start] != Color::NONE) { continue; }
+
+        colors[start] = Color::RED;
+        s.push(start);
+
+        while (not s.empty()) {
+            int current = s.top();
+            s.pop();
+
+            for (int i = 0; i < m_vertices; ++i) {
+                if (g[current][i] == 0) { continue; }
+
+                if (colors[i] == Color::NONE) {
+                    colors[i] = (colors[current] == Color::RED) ? Color::BLUE : Color::RED;
+                    s.push(i);
+                } else if (colors[i] == colors[current]) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}
