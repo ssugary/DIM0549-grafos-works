@@ -15,6 +15,8 @@
 #include <list>
 #include <unordered_map>
 #include <iostream>
+#include <queue>
+#include <stack>
 
 template <typename T>
 using Matriz = std::vector<std::vector<T>>; //> Define um alises para uma matriz de adjacências de tipo T
@@ -114,6 +116,8 @@ public:
 
     int total_edges() const { return m_edges; } //> Retorna o número total de arestas no grafo
     int total_vertices() const { return m_vertices; } //> Retorna o número total de vértices no grafo
+
+    bool is_conexo(); //> Verifica se o grafo é conexo, ou seja, se existe um caminho entre qualquer par de vértices no grafo
 };
 
 #include "grafos.tpp"
