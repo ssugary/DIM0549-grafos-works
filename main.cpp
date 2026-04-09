@@ -3,7 +3,7 @@
 
 int main(int argc, char const *argv[])
 {
-    Graph<int> g(7);
+    Graph<int> g(6);
      g.add(1, 4);
      g.add(2, 4);
      g.add(2, 3);
@@ -31,6 +31,16 @@ int main(int argc, char const *argv[])
         g2.to_list();
     std::cout << "-------------------\n";
         g2.print();
+    std::cout << "--------------------\n";
+    Graph<int> g3(6);
+    g3.add(1, 4);
+    g3.add(1, 5);
+    g3.add(2, 5);
+    g3.add(2, 6);
+    g3.add(3, 4);
+    g3.add(3, 6);
+    g3.print();
+    std::cout << "g3 is bipartite: " << (g3.is_bipartite() ? "Yes" : "No") << std::endl;
      
     return 0;
 }
