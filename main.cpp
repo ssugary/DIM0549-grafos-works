@@ -3,7 +3,7 @@
 
 int main(int argc, char const *argv[])
 {
-    Graph<int> g(6);
+    Graph<int> g(7);
      g.add(1, 4);
      g.add(2, 4);
      g.add(2, 3);
@@ -14,6 +14,7 @@ int main(int argc, char const *argv[])
      g.print(); 
      std::cout << "total edges: " << g.total_edges() << std::endl;
      std::cout << "total vertices: " << g.total_vertices() << std::endl;
+     std::cout << "The graph is conexo: " << (g.is_conexo() ? "Yes" : "No") << std::endl;
      std::cout << "-------------------\n";
      std::cout<<"Degree of vertex 4: " <<g.degree(4) << std::endl;
      g.is_adjacent(1, 4) ? std::cout << "Vertices 1 and 4 are adjacent.\n" : std::cout << "Vertices 1 and 4 are not adjacent.\n";
