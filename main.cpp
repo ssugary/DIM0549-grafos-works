@@ -4,6 +4,7 @@
 
 int main(int argc, char const *argv[])
 {
+
     Graph<int> g(6);
      g.add(1, 4);
      g.add(2, 4);
@@ -47,8 +48,16 @@ int main(int argc, char const *argv[])
 
 
     std::unique_ptr<psr::Parser<int>> parser = CreateParser::create<int>( psr::ParserType::TXT);
+
+    if (argc != 2) {
+        std::cerr << "Error: Wrong number of arguments.\n";
+        std::cerr << "Usage: " << argv[0] << " <input_file_path>\n";
+        return EXIT_FAILURE; // Retorna 1 para o sistema
+    }
+    
     Graph<int> graph = parser->parse(argv[1]);
 
+    graph.to_incMat();
     graph.print();
 
 
