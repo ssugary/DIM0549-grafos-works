@@ -1,4 +1,4 @@
-# DIM0549-grafos-works
+    # DIM0549-grafos-works
 
 Este projeto implementa algoritmos de grafos em C++.
 
@@ -26,8 +26,15 @@ cmake --build build
 4. Execute o programa:
 
 ```bash
-./build/grafos
+./build/grafos <caminho-do-arquivo> <tipo-do-grafo>
 ```
+
+onde: 
+
+<caminho-do-arquivo> é o caminho do arquivo de leitura
+<tipo-do-grafo> é o tipo que os vertices do grafo vão ter, podendo receber "-c" ou "--char" para vértices do tipo char e "-i" ou "--int" para vértices do tipo inteiro. 
+
+
 
 ## Estrutura
 
