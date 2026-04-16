@@ -540,4 +540,77 @@ bool Graph<T>::is_bipartite() {
 
     return true;
 }
+
+
+template <typename T>
+void Graph<T>::dfs_directed_classification(T start_vertex) {
+    if (!is_targeted) {
+        std::cout << "Aviso: A classificacao de arestas em Arvore, Retorno, Avanco e Cruzamento "
+                  << "e uma propriedade tipicamente aplicada a Digrafos.\n";
+    }
+
+    int start_index = get_vertex_index(start_vertex, false);
+    if (start_index == -1) {
+        std::cerr << "Erro: Vertice inicial nao encontrado.\n";
+        return;
+    }
+
+    this->to_list(); 
+
+    enum class Color { WHITE, GRAY, BLACK };
+    std::vector<Color> color(m_vertices, Color::WHITE);
+    std::vector<int> discovery_time(m_vertices, 0); //> Profundidade de entrada (d)
+    std::vector<int> finish_time(m_vertices, 0);    //> Profundidade de saída (f)
+    std::vector<int> parent(m_vertices, -1);
+    
+    int time = 0; //> Relógio global da DFS
+
+    //> Função recursiva auxiliar (lambda) para visitar os vértices
+    auto dfs_visit = [&](auto&& self, int u) -> void {
+        time++;
+        discovery_time[u] = time;
+        color[u] = Color::GRAY; //> Vértice descoberto, mas ainda visitando vizinhos
+
+        for (const auto& neighbor : m_list[u]) {
+            int v = get_vertex_index(neighbor, false);
+            if (v == -1) continue;
+
+            std::cout << "Aresta (" << get_vertex_label(u) << " -> " << get_vertex_label(v) << "): ";
+
+            if (color[v] == Color::WHITE) {
+                std::cout << "Arvore\n";
+                parent[v] = u;
+                self(self, v); 
+            } 
+            else if (color[v] == Color::GRAY) {
+                std::cout << "Retorno\n";
+            } 
+            else if (color[v] == Color::BLACK) {
+                if (discovery_time[u] < discovery_time[v]) {
+                    std::cout << "Avanco\n";
+                } else {
+                    std::cout << "Cruzamento\n";
+                }
+            }
+        }
+
+        color[u] = Color::BLACK; //> Todos os vizinhos visitados, vértice finalizado
+        time++;
+        finish_time[u] = time;
+    };
+
+    std::cout << "Classificacao de Arestas:\n";
+    
+    //> Dispara a DFS a partir do vértice inicial solicitado
+    dfs_visit(dfs_visit, start_index);
+
+    std::cout << "\n--- Profundidade de Entrada (d) e Saida (f) ---\n";
+    for (int i = 0; i < m_vertices; i++) {
+        if (color[i] != Color::WHITE) { //> Imprime apenas os que foram alcançados
+            std::cout << "Vertice [" << get_vertex_label(i) 
+                      << "]: Entrada = " << discovery_time[i] 
+                      << ", Saida = " << finish_time[i] << "\n";
+        }
+    }
+}
 #endif
