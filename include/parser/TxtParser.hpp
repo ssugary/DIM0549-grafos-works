@@ -32,8 +32,7 @@ template <typename Type>
 class TxtParser : public psr::Parser<Type> {
 
     public:
-        GraphType graphType{GraphType::NONE};
-        Graph<Type> parse(const std::string& filePath) override;
+        Graph<Type> parse(const std::string& filePath, psr::GraphOption graphOption) override;
 };
 
 #include "TxtParser.tpp"

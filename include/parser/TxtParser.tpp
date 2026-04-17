@@ -1,13 +1,15 @@
 #ifndef TXT_PARSER_TPP
 #define TXT_PARSER_TPP
 
+#include "GraphParser.hpp"
+#include "grafos.hpp"
 #include <string>
 #pragma once
 
 #include "TxtParser.hpp"
 
 template <typename Type>
-Graph<Type> TxtParser<Type>::parse(const std::string& filePath){
+Graph<Type> TxtParser<Type>::parse(const std::string& filePath, psr::GraphOption graphOption){
     if(filePath.empty()){
         throw std::invalid_argument("Error! The file path provided is empty.");
     }
@@ -28,7 +30,7 @@ Graph<Type> TxtParser<Type>::parse(const std::string& filePath){
 
     bool isFirstLineAfterVertex{true};
 
-    Graph<Type> graph(vertex);
+    Graph<Type> graph(vertex, graphOption);
 
     while(std::getline(ifs, line)){
 
@@ -41,13 +43,16 @@ Graph<Type> TxtParser<Type>::parse(const std::string& filePath){
 
         
         if(ss >> pair.first >> pair.second){
-            graph.add(pair);
+            graph.add(pair);    
         }
-        else{
-            if(isFirstLineAfterVertex){
-                graph = Graph<Type>(vertex, std::stoi(line));
-            }
+        else if(isFirstLineAfterVertex){
+            int i = std::stoi(line);
+            graphOption = (psr::GraphOption) std::stoi(line);
+            graph = Graph<Type>(vertex, graphOption);
+        
         }
+
+        
         isFirstLineAfterVertex = false;
     }
     ifs.close();
@@ -58,7 +63,7 @@ Graph<Type> TxtParser<Type>::parse(const std::string& filePath){
 
 
 
-bool verify_args(const int argc, const char* argv[], GraphType& graphType, std::string& filePath){
+bool verify_args(const int argc, const char* argv[], GraphType& graphType, psr::GraphOption& graphOption, std::string& filePath){
 
     bool has_input_file{false};
     for(int i{1}; i < argc; ++i){
@@ -67,6 +72,9 @@ bool verify_args(const int argc, const char* argv[], GraphType& graphType, std::
         }
         else if((std::string(argv[i]) == "-c" || std::string(argv[i]) == "--char") && graphType == GraphType::NONE){
             graphType = GraphType::CHAR;
+        }
+        else if((std::string(argv[i]) == "-d" || std::string(argv[i]) == "--directed")){
+            graphOption = psr::GraphOption::DIGRAPH;
         }
         else if(!has_input_file && argv[i][0] != '-'){
             filePath = std::string(argv[i]);
