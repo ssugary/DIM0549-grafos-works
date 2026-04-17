@@ -12,17 +12,17 @@ namespace psr {
                 XML
             };
 
-    enum class GraphOption{
-            DIGRAPH=0,
-            GRAPH
-        };
+    enum GraphOption{
+        GRAPH=0,
+        DIGRAPH    
+    };
 
     template <typename Type>
     class Parser {
         public:
             Parser() = default;
             virtual ~Parser() = default;
-            virtual Graph<Type> parse(const std::string& filePath) = 0;
+            virtual Graph<Type> parse(const std::string& filePath, GraphOption graphOption) = 0;
 
     };
 }
